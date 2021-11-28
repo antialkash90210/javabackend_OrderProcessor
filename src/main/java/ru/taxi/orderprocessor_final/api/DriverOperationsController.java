@@ -13,11 +13,12 @@ import ru.taxi.orderprocessor_final.logic.DriverOperationsService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/drivers")
-public class DriverOperationsController {
+@RequestMapping("/drivers") //драйверы
+public class DriverOperationsController { //Контроллер операций с драйверами
 
     private final DriverOperationsService driverOperationsService;
 
+    //Создайте
     @PostMapping
     public DriverEntity create(@RequestBody DriverDto dto) {
         return driverOperationsService.create(dto);

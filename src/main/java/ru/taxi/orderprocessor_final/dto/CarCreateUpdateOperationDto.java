@@ -1,4 +1,4 @@
-
+//Data Transfer Object (DTO) — один из шаблонов проектирования, используется для передачи данных между подсистемами приложения.
 package ru.taxi.orderprocessor_final.dto;
 
 import lombok.AllArgsConstructor;
@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CarCreateUpdateOperationDto {
+public class CarCreateUpdateOperationDto { //Создание обновление операцию Dto автомбилей
 
     @NotBlank
     private String model;

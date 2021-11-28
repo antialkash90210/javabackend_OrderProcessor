@@ -14,21 +14,24 @@ import java.time.Period;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CarOperationsProcessor {
+public class CarOperationsProcessor { //Процессор управления автомобилем
 
     @Value("${internal.cars.max-year}")
-    private Integer maxYear;
+    private Integer maxYear; //макс Год
     @Value("${internal.cars.offset}")
-    private Integer offset;
+    private Integer offset; //компенсировать
 
+    //Рассчитать
     public PriorityClass doCalculateClass(CarCreateUpdateOperationDto dto) {
         var between = Period.between(LocalDate.now(), dto.getIssuedAt());
         var carAge = between.getYears();
         if (carAge > maxYear) {
             throw new IllegalStateException("Exceeded allowed time period for car exploitation!");
+            //Превышен разрешенный срок эксплуатации автомобиля!
         }
+        //необработанный приоритетный класс
         PriorityClass rawPriorityClass = PriorityClass.convert(dto.getCarClass());
-        Integer downgradesToApply = doCalculateDowngrades(carAge);
+        Integer downgradesToApply = doCalculateDowngrades(carAge); //переход на более раннюю версию Подать заявку
 
         rawPriorityClass = downgradesToApply > rawPriorityClass.ordinal() ?
                 PriorityClass.values()[0] :
@@ -37,6 +40,7 @@ public class CarOperationsProcessor {
         return rawPriorityClass;
     }
 
+    //Рассчитать понижение
     public Integer doCalculateDowngrades(Integer carAge) {
         int downgrades = carAge / offset;
         int tail = carAge % offset;

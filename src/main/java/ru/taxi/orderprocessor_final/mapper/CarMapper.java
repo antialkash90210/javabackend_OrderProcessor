@@ -13,7 +13,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-public interface CarMapper {
+public interface CarMapper { //автомобиль на карте
 
     @Mapping(source = "stateNumber", target = "number")
     @Mapping(target = "priorityClass", ignore = true)

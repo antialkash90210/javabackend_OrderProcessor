@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Sort {
+public class Sort { //Сортировать
 
     @NotBlank
     @ValidSortingField

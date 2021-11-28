@@ -12,7 +12,7 @@ import ru.taxi.orderprocessor_final.mapper.DriverMapper;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class DriverOperationsService {
+public class DriverOperationsService { //Служба эксплуатации водителей
 
     private final DriverOperationsRepository driverOperationsRepository;
     private final CarOperationsService carOperationsService;

@@ -14,7 +14,7 @@ import org.springframework.http.HttpStatus;
 @NoArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ApiError {
+public class ApiError { //Ошибка API
 
     private HttpStatus status;
     private String message;

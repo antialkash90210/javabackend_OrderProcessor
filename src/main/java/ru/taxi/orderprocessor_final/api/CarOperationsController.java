@@ -19,21 +19,24 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
-@RestController
-@RequiredArgsConstructor
-@RequestMapping("/cars")
-public class CarOperationsController {
+@RestController //регулятор управления
+@RequiredArgsConstructor //Обязательный конструктор аргументов
+@RequestMapping("/cars") //Запросить сопоставление-первая часть url
+public class CarOperationsController { //Контроллер операций с автомобилем
 
     private final CarOperationsService carOperationsService;
 
+
     @PostMapping
-    public CarDto createCar(@Valid @RequestBody CarCreateUpdateOperationDto carCreateUpdateOperationDto) {
-        log.debug("createCar.in - dto: {}", carCreateUpdateOperationDto);
+    //создать автомобиль
+    public CarDto createCar (@Valid @RequestBody CarCreateUpdateOperationDto carCreateUpdateOperationDto) {
+        log.debug("createCar.in - dto: {}", carCreateUpdateOperationDto); //журнал отладки
         var carEntity = carOperationsService.create(carCreateUpdateOperationDto);
         log.debug("createCar.out - response: {}", carEntity);
         return carEntity;
     }
 
+    //обновить автомобиль
     @PutMapping
     public CarDto updateCar(@Valid @RequestBody CarCreateUpdateOperationDto carDto) {
         log.debug("updateCar.in - dto: {}", carDto);
@@ -42,12 +45,12 @@ public class CarOperationsController {
         return carEntity;
     }
 
-    @GetMapping("/{number}")
+    @GetMapping("/{number}") //номер
     public CarDto findCarByNumber(@PathVariable String number) {
         return carOperationsService.findByNumber(number);
     }
 
-    @PostMapping("/find")
+    @PostMapping("/find") //найти
     public List<CarDto> findCars(@RequestBody @Valid FindCarsCriteria findCarsCriteria) {
         return carOperationsService.find(findCarsCriteria);
     }

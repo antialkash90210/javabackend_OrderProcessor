@@ -26,19 +26,23 @@ import static java.util.Optional.ofNullable;
 @Slf4j
 @Repository
 @RequiredArgsConstructor
-public class CarOperationsRepositoryCustom {
+public class CarOperationsRepositoryCustom { //Пользовательский репозиторий операций с автомобилями
 
     private final EntityManager entityManager;
 
+    //найти автомобиль из списка по критерием
     public List<CarEntity> find(ECriteria criteria, Sort sort) {
+        //Конструктор критериев
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        //Критерий запроса
         CriteriaQuery<CarEntity> query = criteriaBuilder.createQuery(CarEntity.class);
+        //основа
         Root<CarEntity> root = query.from(CarEntity.class);
 
         List<Predicate> predicates = new ArrayList<>();
 
         if (criteria != null) {
-            //add search predicates
+            // добавляем предикаты поиска
             ofNullable(criteria.getColor())
                     .ifPresent(option -> predicates.add(criteriaBuilder.equal(root.get("color"), option)));
             ofNullable(criteria.getCarClass())
@@ -59,14 +63,15 @@ public class CarOperationsRepositoryCustom {
             }
         });
         query.where(predicates.toArray(new Predicate[0]));
-        return entityManager.createQuery(query).getResultList();
+        return entityManager.createQuery(query).getResultList(); //вернуть Менеджер сущности-создать запрос-получить список результатов
     }
 
-    private void validateSort(Sort sortingStrategy) {
+    private void validateSort(Sort sortingStrategy) { //проверить сортировку
         boolean anyMatch = Arrays.stream(CarEntity.class.getDeclaredFields())
                 .anyMatch(field -> field.getName().equals(sortingStrategy.getSortBy()));
         if (!anyMatch){
             throw new IllegalArgumentException(format("Field %s does not exist in entity!", sortingStrategy.getSortBy()));
+            //Поле% s не существует в сущности!
         }
     }
 }

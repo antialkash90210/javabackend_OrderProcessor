@@ -22,16 +22,18 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @ControllerAdvice
-public class ExceptionAdvice {
+public class ExceptionAdvice { //Совет по исключениям
+
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({
+    @ExceptionHandler({  //обработка исключений
             ConstraintViolationException.class,
             DataIntegrityViolationException.class,
             InvalidDataAccessApiUsageException.class
     })
-    @ResponseBody
-    public ApiError handleConstraintException(Exception exception) {
+
+    @ResponseBody // @ResponseBodyАннотации указывает на то, что возвращаемое значение метода будет тело веб - ответа.
+    public ApiError handleConstraintException(Exception exception) { //обрабатывать исключение ограничения
         log.error("exception caught by advice {} ", exception.getMessage());
         if (Objects.nonNull(exception.getCause())) {
             return wrapBusinessException(exception.getCause(), HttpStatus.BAD_REQUEST);
@@ -60,7 +62,8 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({MethodArgumentNotValidException.class})
     @ResponseBody
-    public ApiError test(MethodArgumentNotValidException exception) {
+    public ApiError test(MethodArgumentNotValidException exception) { //Тест ошибок API
+        //Результат привязки
         BindingResult exceptions = exception.getBindingResult();
         if (exceptions.hasErrors()) {
             List<ObjectError> errors = exceptions.getAllErrors();
@@ -76,6 +79,7 @@ public class ExceptionAdvice {
     }
 
 
+    //Ошибка API обертки Исключение для бизнеса
     private ApiError wrapBusinessException(Throwable throwable, HttpStatus status) {
         return ApiError.builder()
                 .message(throwable.getMessage())
@@ -84,6 +88,7 @@ public class ExceptionAdvice {
                 .build();
     }
 
+    //Допустимое исключение обертывания
     private ApiError wrapValidException(String message, HttpStatus status) {
         return ApiError.builder()
                 .message(message)
@@ -92,6 +97,7 @@ public class ExceptionAdvice {
                 .build();
     }
 
+    //обернуть исключение системы
     private ApiError wrapSystemException(HttpStatus status) {
         return ApiError.builder()
                 .status(status)

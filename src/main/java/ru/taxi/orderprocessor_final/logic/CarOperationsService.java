@@ -21,13 +21,14 @@ import static java.lang.String.format;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CarOperationsService {
+public class CarOperationsService { //Служба эксплуатации автомобилей
 
     private final CarOperationsRepository repository;
     private final CarOperationsRepositoryCustom repositoryCustom;
     private final CarOperationsProcessor processor;
     private final CarMapper mapper;
 
+    //Создать
     public CarDto create(CarCreateUpdateOperationDto dto) {
         log.debug("create.in - dto {}", dto);
         var carEntity = mapper.dtoToEntity(dto);
@@ -40,7 +41,7 @@ public class CarOperationsService {
         log.debug("create.out - response {}", carDto);
         return carDto;
     }
-
+    //Обновить
     public CarDto update(CarCreateUpdateOperationDto dto) {
         log.debug("update.in - dto {}", dto);
         var stateNumber = dto.getStateNumber();
@@ -57,7 +58,7 @@ public class CarOperationsService {
         log.debug("update.out - response {}", updatedPersistedDto);
         return updatedPersistedDto;
     }
-
+    //Найти
     public List<CarDto> find(FindCarsCriteria criteria) {
         log.info("find.in - searching cars by criteria {}", criteria);
         List<CarEntity> carEntities = repositoryCustom.find(criteria.getCriteria(), criteria.getSort());
@@ -65,11 +66,11 @@ public class CarOperationsService {
         log.info("find.out - result: {}", carDtos);
         return carDtos;
     }
-
+    //Найти по номеру
     public CarDto findByNumber(String stateNumber) {
         return mapper.entityToDto(findByNumberInternal(stateNumber));
     }
-
+    //найти по внутр номеру
     public CarEntity findByNumberInternal(String stateNumber) {
         return repository.findByNumber(stateNumber).orElseThrow(() -> {
             throw new EntityNotFoundException(format("Car with number %s not found in registry.", stateNumber));

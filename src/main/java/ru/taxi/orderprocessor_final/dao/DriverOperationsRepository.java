@@ -8,5 +8,5 @@ import ru.taxi.orderprocessor_final.entity.DriverEntity;
 import java.util.UUID;
 
 @Repository
-public interface DriverOperationsRepository extends JpaRepository<DriverEntity, UUID> {
+public interface DriverOperationsRepository extends JpaRepository<DriverEntity, UUID> { //Репозиторий операций с драйверами
 }
