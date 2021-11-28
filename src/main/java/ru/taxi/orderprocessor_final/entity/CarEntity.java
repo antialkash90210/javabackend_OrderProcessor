@@ -1,0 +1,44 @@
+
+package ru.taxi.orderprocessor_final.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import ru.taxi.orderprocessor_final.enums.PriorityClass;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import java.time.LocalDate;
+
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity(name = "cars")
+public class CarEntity extends BaseEntity {
+
+    private String model;
+
+    @Column(unique = true)
+    private String number;
+
+    private String color;
+
+    private LocalDate issuedAt;
+
+    @Enumerated(EnumType.STRING)
+    private CarClass carClass;
+
+    @Enumerated(EnumType.STRING)
+    private PriorityClass priorityClass;
+
+    public enum CarClass {
+        A, B, C, E, D, F
+    }
+
+}

@@ -1,0 +1,1 @@
+ALTER TABLE carALTER TABLE cars ADD CONSTRAINT number_unique UNIQUE (number);s ADD CONSTRAINT number_unique UNIQUE (number);
